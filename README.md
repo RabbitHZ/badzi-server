@@ -108,8 +108,7 @@ spring:
 
 #### 3. 빌드 및 실행
 ```bash
-mvn clean install
-mvn spring-boot:run
+./gradlew bootRun
 ```
 
 #### 4. Swagger UI 접속
@@ -122,7 +121,7 @@ mvn spring-boot:run
 - JUnit 5와 Mockito를 사용해 서비스 및 컨트롤러 단위 테스트를 구현했습니다.
 - 테스트 실행 명령
     ```bash
-    mvn test
+    ./gradlew test
     ```
 
 ## 🛠️ 추가 개선 가능성
