@@ -34,9 +34,7 @@ public class BadgeController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf("image/svg+xml"));
-        headers.setCacheControl("no-cache, no-store, must-revalidate, max-age=0");
-        headers.setPragma("no-cache");
-        headers.setExpires(0);
+        headers.setCacheControl("private, no-cache, no-store, must-revalidate, max-age=0");
 
         return ResponseEntity.ok()
                 .headers(headers)
