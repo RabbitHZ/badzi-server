@@ -1,4 +1,4 @@
-# 🐰 BAZZI 🐰 
+# 🐰 BADZI 🐰 
 조회수 및 뱃지 관리 API 프로젝트
 ## 📌 프로젝트 개요
 사용자 계정을 기반으로 GitHub 리포지토리의 조회수를 관리하고, 조회수를 시각적으로 표현하는 SVG 뱃지를 생성하는 REST API입니다. Spring Boot와 Redis를 기반으로 구현되었으며, 클린 아키텍처와 마이크로서비스 아키텍처(MSA) 원칙을 준수하여 도메인 간 권한 침범을 최소화하고 유지보수성을 높였습니다.
@@ -29,7 +29,7 @@ project-root/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/
-│   │   │       └── bazzi/
+│   │   │       └── badzi/
 │   │   │           ├── application/
 │   │   │           │   ├── dto/          // DTO 클래스
 │   │   │           │   └── service/      // 서비스 인터페이스 및 구현
@@ -47,7 +47,7 @@ project-root/
 │   └── test/
 │       ├── java/
 │       │   └── com/
-│       │       └── bazzi/
+│       │       └── badzi/
 │       │           ├── service/          // 서비스 테스트
 │       │           └── controller/       // 컨트롤러 테스트
 │       └── resources/
@@ -92,8 +92,8 @@ project-root/
 
 #### 1. 리포지토리 클론
 ```bash
-git clone https://github.com/your-repo/viewcount-badge-api.git
-cd viewcount-badge-api
+git clone https://github.com/RabbitHZ/badzi-server.git
+cd badzi-server
 ```
 
 #### 2. Redis 설정
@@ -101,9 +101,13 @@ cd viewcount-badge-api
 - src/main/resources/application.yml에 Redis 연결 정보를 설정합니다.
 ```yaml
 spring:
+  data:
     redis:
-        host: localhost
-        port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      ssl:
+        enabled: ${REDIS_SSL:false}
 ```
 
 #### 3. 빌드 및 실행
@@ -136,8 +140,6 @@ spring:
 3. 코드 작성 후 단위 테스트 추가.
 4. Pull Request 생성 및 코드 리뷰 요청.
 
-## 📄 라이선스
-MIT License
 
 이 README.md는 프로젝트의 설계와 구현 세부사항을 명확히 전달하며, 뱃지 미리보기 생성 기능을 포함한 요구사항을 모두 반영했습니다. 추가 수정이 필요하면 알려주세요!
 
