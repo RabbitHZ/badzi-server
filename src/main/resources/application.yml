@@ -1,3 +1,9 @@
+server:
+  # Cloud Run 등 리버스 프록시 뒤에서 원 요청의 scheme(https)/host를
+  # X-Forwarded-* 헤더로부터 인식하도록 한다. 이게 없으면 Swagger가
+  # 생성하는 server URL이 http:// 로 나와 Mixed Content로 차단된다.
+  forward-headers-strategy: framework
+
 spring:
   data:
     redis:

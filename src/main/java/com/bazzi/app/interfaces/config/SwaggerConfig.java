@@ -2,27 +2,18 @@ package com.bazzi.app.interfaces.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
 
 @Configuration
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        Server httpsServer = new Server();
-        httpsServer.setUrl("https://bazzi-server-464152216340.asia-northeast3.run.app");
-        httpsServer.setDescription("Production Server (HTTPS)");
-
-        Server localServer = new Server();
-        localServer.setUrl("http://localhost:8080");
-        localServer.setDescription("Local Development Server");
-
+        // servers를 지정하지 않으면 springdoc이 현재 요청이 들어온 서버를
+        // base URL로 자동 사용한다. 덕분에 로컬/배포 환경 어디서든 Swagger의
+        // "Try it out"이 항상 올바른 서버로 요청을 보낸다.
         return new OpenAPI()
-                .servers(Arrays.asList(httpsServer, localServer))
                 .info(new Info()
                         .title("조회수 및 뱃지 관리 API")
                         .version("1.0.0")
