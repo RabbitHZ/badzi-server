@@ -13,9 +13,9 @@ public class BadgeRequestDto {
     @Schema(description = "github url", example = "https://github.com/username")
     private String url = "";
 
-    @Schema(description = "스타일 타입 (basic, maple, rabbit)", example = "basic")
-    @Pattern(regexp = "^(basic|maple|rabbit)?$",
-            message = "스타일 타입은 basic, maple, rabbit 중 하나여야 합니다")
+    @Schema(description = "스타일 타입 (basic, maple, rabbit 또는 커스텀)", example = "basic")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{1,50}$",
+            message = "스타일 타입은 영문/숫자/_/- 1~50자")
     private String styleType = "basic";
 
     @Schema(description = "뱃지 색상 - basic 스타일에서만 적용 (색상명, hex, rgb 지원)", example = "#4CAF50")
