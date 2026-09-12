@@ -34,7 +34,8 @@ public class SecurityConfig {
                     "/api/shop/items/**",
                     "/shop/items/**",
                     "/oauth2/**", "/login/**",
-                    "/api/auth/**"
+                    "/api/auth/**",
+                    "/api/payments/webhook"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
