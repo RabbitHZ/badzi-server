@@ -9,4 +9,5 @@ public interface BadgeStyleRepository extends JpaRepository<BadgeStyle, Long> {
     List<BadgeStyle> findAllByUserId(Long userId);
     List<BadgeStyle> findAllByPresetTrue();
     Optional<BadgeStyle> findByShopItemId(Long shopItemId);
+    Optional<BadgeStyle> findByStyleTypeAndPresetTrue(String styleType);
 }

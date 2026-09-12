@@ -6,6 +6,7 @@ import com.bazzi.app.application.exception.ResourceNotFoundException;
 import com.bazzi.app.application.service.badge.BadgeStyleService;
 import com.bazzi.app.infrastructure.persistence.badge.BadgeStyle;
 import com.bazzi.app.infrastructure.persistence.badge.BadgeStyleRepository;
+import com.bazzi.app.infrastructure.persistence.shop.ShopItem;
 import com.bazzi.app.infrastructure.persistence.user.User;
 import com.bazzi.app.infrastructure.persistence.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class BadgeStyleServiceImpl implements BadgeStyleService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("사용자를 찾을 수 없습니다."));
 
+        // styleType이 프리셋(maple/rabbit)과 일치하면 해당 shop_item 자동 연결
+        ShopItem linkedShopItem = badgeStyleRepository
+                .findByStyleTypeAndPresetTrue(request.getStyleType())
+                .map(BadgeStyle::getShopItem)
+                .orElse(null);
+
         BadgeStyle style = BadgeStyle.builder()
                 .user(user)
                 .name(request.getName())
@@ -43,6 +50,7 @@ public class BadgeStyleServiceImpl implements BadgeStyleService {
                 .label(request.getLabel())
                 .icon(request.getIcon())
                 .fontSize(request.getFontSize())
+                .shopItem(linkedShopItem)
                 .preset(false)
                 .build();
 
