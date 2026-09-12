@@ -1,11 +1,10 @@
 package com.bazzi.app.infrastructure.persistence;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.time.Duration;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,6 +14,7 @@ public class RedisViewCountRepository {
 
     private static final String TODAY_KEY_PREFIX = "today:";
     private static final String TOTAL_KEY_PREFIX = "total:";
+    private static final Duration TODAY_TTL = Duration.ofHours(24);
 
     //오늘 조회수 조회
     public int getTodayViewCount(String username) {
@@ -38,11 +38,14 @@ public class RedisViewCountRepository {
         }
     }
 
-    //오늘 조회수 증가
+    //오늘 조회수 증가 (키 최초 생성 시 TTL 24h 설정)
     public void incrementTodayViewCount(String username) {
         try {
             String todayKey = TODAY_KEY_PREFIX + username;
-            redisTemplate.opsForValue().increment(todayKey, 1);
+            Long count = redisTemplate.opsForValue().increment(todayKey, 1);
+            if (count != null && count == 1) {
+                redisTemplate.expire(todayKey, TODAY_TTL);
+            }
         } catch (Exception e){
             throw new RuntimeException("오늘 조회수 증가 중 오류 발생: " + e.getMessage(), e);
         }
@@ -58,12 +61,12 @@ public class RedisViewCountRepository {
         }
     }
 
-    //오늘, 전체 조회수 초기화
+    //오늘, 전체 조회수 초기화 (today는 TTL 24h 유지, total은 TTL 없음)
     public void resetViewCount(String username) {
         try {
             String todayKey = TODAY_KEY_PREFIX + username;
             String totalKey = TOTAL_KEY_PREFIX + username;
-            redisTemplate.opsForValue().set(todayKey, "0");
+            redisTemplate.opsForValue().set(todayKey, "0", TODAY_TTL);
             redisTemplate.opsForValue().set(totalKey, "0");
         } catch (Exception e){
             throw new RuntimeException("조회수 초기화 중 오류 발생: " + e.getMessage(), e);
