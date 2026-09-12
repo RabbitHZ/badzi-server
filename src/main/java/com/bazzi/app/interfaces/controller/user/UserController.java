@@ -1,6 +1,8 @@
 package com.bazzi.app.interfaces.controller.user;
 
+import com.bazzi.app.application.dto.response.shop.UserItemResponse;
 import com.bazzi.app.application.dto.response.user.UserProfileResponse;
+import com.bazzi.app.application.service.shop.ShopService;
 import com.bazzi.app.application.service.user.UserService;
 import com.bazzi.app.common.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name = "Users", description = "사용자 API")
 @RestController
 @RequestMapping("/api/users")
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final ShopService shopService;
 
     @Operation(summary = "내 프로필 조회", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/me")
@@ -27,5 +32,13 @@ public class UserController {
             @AuthenticationPrincipal Long userId) {
         UserProfileResponse profile = userService.getProfile(userId);
         return ResponseEntity.ok(ApiResponse.success("프로필 조회 성공", profile));
+    }
+
+    @Operation(summary = "내 보유 아이템 목록", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/me/items")
+    public ResponseEntity<ApiResponse<List<UserItemResponse>>> getMyItems(
+            @AuthenticationPrincipal Long userId) {
+        List<UserItemResponse> items = shopService.getUserItems(userId);
+        return ResponseEntity.ok(ApiResponse.success("보유 아이템 조회 성공", items));
     }
 }
