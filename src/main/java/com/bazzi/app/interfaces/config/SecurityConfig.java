@@ -1,5 +1,6 @@
 package com.bazzi.app.interfaces.config;
 
+import com.bazzi.app.interfaces.config.oauth.CustomOAuth2UserService;
 import com.bazzi.app.interfaces.config.oauth.OAuth2SuccessHandler;
 import com.bazzi.app.interfaces.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -42,6 +44,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .authorizationEndpoint(e -> e.baseUri("/oauth2/authorize"))
                 .redirectionEndpoint(e -> e.baseUri("/login/oauth2/code/*"))
+                .userInfoEndpoint(u -> u.userService(customOAuth2UserService))
                 .successHandler(oAuth2SuccessHandler)
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
