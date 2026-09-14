@@ -41,3 +41,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Project-local docs / tooling (git 추적 제외) ###
+/docs/
+.claude/
+.omc/

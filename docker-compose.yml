@@ -4,8 +4,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: bazzi-redis
-    expose:
-      - "6379"
+    ports:
+      - "6379:6379"
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD:?REDIS_PASSWORD is required}"
@@ -18,8 +18,8 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: bazzi-postgres
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${DB_NAME:?DB_NAME is required}
       POSTGRES_USER: ${DB_USER:?DB_USER is required}

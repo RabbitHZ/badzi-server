@@ -2,6 +2,7 @@ package com.bazzi.app.util.badge;
 
 import com.bazzi.app.util.badge.generator.BadgeGenerator;
 import com.bazzi.app.util.badge.generator.BasicBadgeGenerator;
+import com.bazzi.app.util.badge.generator.DreamRabbitBadgeGenerator;
 import com.bazzi.app.util.badge.generator.MapleBadgeGenerator;
 import com.bazzi.app.util.badge.generator.RabbitBadgeGenerator;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,14 @@ public class BadgeGeneratorFactory {
     public BadgeGeneratorFactory(
             BasicBadgeGenerator basicBadgeGenerator,
             MapleBadgeGenerator mapleBadgeGenerator,
-            RabbitBadgeGenerator rabbitBadgeGenerator
+            RabbitBadgeGenerator rabbitBadgeGenerator,
+            DreamRabbitBadgeGenerator dreamRabbitBadgeGenerator
     ) {
         this.generators = new EnumMap<>(BadgeStyleType.class);
         this.generators.put(BadgeStyleType.BASIC, basicBadgeGenerator);
         this.generators.put(BadgeStyleType.MAPLE, mapleBadgeGenerator);
         this.generators.put(BadgeStyleType.RABBIT, rabbitBadgeGenerator);
+        this.generators.put(BadgeStyleType.DREAM_RABBIT, dreamRabbitBadgeGenerator);
     }
 
     public BadgeGenerator getGenerator(BadgeStyleType styleType) {

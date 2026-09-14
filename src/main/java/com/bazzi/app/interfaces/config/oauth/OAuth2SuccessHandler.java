@@ -39,8 +39,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String name = (String) oAuth2User.getAttributes().get("name");
 
         if (email == null) {
-            // CustomOAuth2UserService 가 GitHub 이메일까지 보강했는데도 없으면,
-            // 이메일 없이 가입시킬 수 없으므로 명확한 실패로 리다이렉트한다.
             getRedirectStrategy().sendRedirect(request, response,
                     baseUrl + "/?error=email_required");
             return;
