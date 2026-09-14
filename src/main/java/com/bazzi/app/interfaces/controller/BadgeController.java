@@ -56,7 +56,7 @@ public class BadgeController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf("image/svg+xml"));
         headers.setCacheControl("private");
-        headers.set("ETag", null);  // ETag 제거
+        headers.remove("ETag");
 
         return ResponseEntity.ok()
                 .headers(headers)

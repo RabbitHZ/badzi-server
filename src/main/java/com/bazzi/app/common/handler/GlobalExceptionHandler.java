@@ -3,12 +3,14 @@ package com.bazzi.app.common.handler;
 import com.bazzi.app.application.exception.CustomException;
 import com.bazzi.app.common.response.ApiResponse;
 import com.bazzi.app.common.response.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -40,6 +42,7 @@ public class GlobalExceptionHandler {
     // 기타 예외 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
+        log.error("Unhandled exception", ex);
         ErrorResponse response = new ErrorResponse(500, "서버 내부 오류가 발생했습니다.");
         return ResponseEntity.status(500).body(response);
     }
