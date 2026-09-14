@@ -5,6 +5,7 @@ import com.bazzi.app.common.response.ApiResponse;
 import com.bazzi.app.common.response.ErrorResponse;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -16,6 +17,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
         ErrorResponse response = new ErrorResponse(ex.getStatusCode(), ex.getMessage());
         return ResponseEntity.status(ex.getStatusCode()).body(response);
+    }
+
+    // Bean Validation 오류 처리
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .findFirst()
+                .orElse("잘못된 요청입니다.");
+        ErrorResponse response = new ErrorResponse(400, message);
+        return ResponseEntity.status(400).body(response);
     }
 
     // Redis 연결 오류 처리
