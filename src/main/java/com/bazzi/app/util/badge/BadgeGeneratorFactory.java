@@ -2,6 +2,7 @@ package com.bazzi.app.util.badge;
 
 import com.bazzi.app.util.badge.generator.BadgeGenerator;
 import com.bazzi.app.util.badge.generator.BasicBadgeGenerator;
+import com.bazzi.app.util.badge.generator.CatBadgeGenerator;
 import com.bazzi.app.util.badge.generator.DreamRabbitBadgeGenerator;
 import com.bazzi.app.util.badge.generator.MapleBadgeGenerator;
 import com.bazzi.app.util.badge.generator.RabbitBadgeGenerator;
@@ -19,13 +20,15 @@ public class BadgeGeneratorFactory {
             BasicBadgeGenerator basicBadgeGenerator,
             MapleBadgeGenerator mapleBadgeGenerator,
             RabbitBadgeGenerator rabbitBadgeGenerator,
-            DreamRabbitBadgeGenerator dreamRabbitBadgeGenerator
+            DreamRabbitBadgeGenerator dreamRabbitBadgeGenerator,
+            CatBadgeGenerator catBadgeGenerator
     ) {
         this.generators = new EnumMap<>(BadgeStyleType.class);
         this.generators.put(BadgeStyleType.BASIC, basicBadgeGenerator);
         this.generators.put(BadgeStyleType.MAPLE, mapleBadgeGenerator);
         this.generators.put(BadgeStyleType.RABBIT, rabbitBadgeGenerator);
         this.generators.put(BadgeStyleType.DREAM_RABBIT, dreamRabbitBadgeGenerator);
+        this.generators.put(BadgeStyleType.CAT, catBadgeGenerator);
     }
 
     public BadgeGenerator getGenerator(BadgeStyleType styleType) {

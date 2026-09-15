@@ -4,7 +4,8 @@ public enum BadgeStyleType {
     BASIC("basic", "기본 스타일"),
     MAPLE("maple", "메이플스토리 스타일"),
     RABBIT("rabbit", "래빗 스타일"),
-    DREAM_RABBIT("dream_rabbit", "드림래빗 스타일");
+    DREAM_RABBIT("dream_rabbit", "드림래빗 스타일"),
+    CAT("cat", "고양이 스타일");
 
     private final String code;
     private final String description;

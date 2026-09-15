@@ -29,7 +29,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BadgeController {
 
-    private static final Set<String> FREE_STYLE_TYPES = Set.of("basic", "maple", "rabbit", "dream_rabbit");
+    private static final Set<String> FREE_STYLE_TYPES = Set.of("basic", "maple", "rabbit", "dream_rabbit", "cat");
 
     private final ViewCountService viewCountService;
     private final BadgeGeneratorFactory badgeGeneratorFactory;
